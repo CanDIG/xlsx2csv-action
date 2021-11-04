@@ -1,0 +1,23 @@
+on: [push]
+
+jobs:
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: Test workflow
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Convert to CSV
+        uses: daisieh/xslx2csv-action # Uses an action in the root directory
+        id: convert
+        with:
+          input_file: "${{GITHUB_WORKSPACE}}/test.xlsx"
+          output_dir: "${{GITHUB_WORKSPACE}}/test"
+      # Commits files to repository
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v4
+        with:
+          author_name: Daisie Huang
+          message: "test convert"
+          add: "${{GITHUB_WORKSPACE}}/test"
+          ref: "test"  # commits to branch "traffic"
