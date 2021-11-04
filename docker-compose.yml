@@ -1,12 +1,7 @@
 version: '3.9'
 
-
 services:
   action:
-    volumes:
-      - type: bind
-        source: .
-        target: /shared
     build:
       context: .
     environment:
