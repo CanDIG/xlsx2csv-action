@@ -8,7 +8,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Convert to CSV
-        uses: ./
+        uses: daisieh/xlsx2csv-action@v1.0
         id: convert
         with:
           input_file: test.xlsx
