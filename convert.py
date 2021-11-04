@@ -1,17 +1,32 @@
 import argparse
 import os
+import re
 from xlsx2csv import Xlsx2csv
 
-def main():
-    parser = argparse.ArgumentParser(description="Convert an xlsx file's sheets to individual csv files")
 
-    parser.add_argument("input_file", help="xlsx file to convert")
-    parser.add_argument("output_dir", help="name of directory for output")
+def main():
+    parser = argparse.ArgumentParser(description="Convert all xlsx files in a directory (or a single xlsx file) to individual csv files")
+
+    parser.add_argument("input", help="directory or file")
 
     args = parser.parse_args()
-    input_file = args.input_file
-    output_dir = f"{os.environ.get('GITHUB_WORKSPACE')}/{args.output_dir}"
-    Xlsx2csv(input_file, outputencoding="utf-8").convert(output_dir, sheetid=0)
+    if os.path.isfile(args.input):
+        file_match = re.match("(.+)\.xlsx$", args.input)
+        if file_match is not None:
+            output_dir = f"{os.environ.get('GITHUB_WORKSPACE')}/{file_match.group(1)}"
+            Xlsx2csv(args.input, outputencoding="utf-8").convert(output_dir, sheetid=0)
+    else:
+        dirlist = [args.input]
+        files = []
+        while len(dirlist) > 0:
+            for (dirpath, dirnames, filenames) in os.walk(dirlist.pop()):
+                dirlist.extend(dirnames)
+                files.extend(map(lambda n: os.path.join(*n), zip([dirpath] * len(filenames), filenames)))
+        for file in files:
+            file_match = re.match("(.+)\.xlsx$", file)
+            if file_match is not None:
+                output_dir = f"{os.environ.get('GITHUB_WORKSPACE')}/{file_match.group(1)}"
+                Xlsx2csv(file, outputencoding="utf-8").convert(output_dir, sheetid=0)
 
 
 if __name__ == "__main__":
