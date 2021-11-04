@@ -11,12 +11,12 @@ jobs:
         uses: ./
         id: convert
         with:
-          input_file: ${{GITHUB_WORKSPACE}}/test.xlsx
-          output_dir: ${{GITHUB_WORKSPACE}}/test
+          input_file: $GITHUB_WORKSPACE/test.xlsx
+          output_dir: $GITHUB_WORKSPACE/test
       - name: Commit changes
         uses: EndBug/add-and-commit@v4
         with:
           author_name: Daisie Huang
           message: "test convert"
-          add: ${{GITHUB_WORKSPACE}}/test
+          add: $GITHUB_WORKSPACE/test
           ref: "test"
