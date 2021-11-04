@@ -8,15 +8,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Convert to CSV
-        uses: daisieh/xlsx2csv-action@v1.0
+        uses: ./
         id: convert
         with:
           input_file: test.xlsx
-          output_dir: test
       - name: Commit changes
         uses: EndBug/add-and-commit@v4
         with:
           author_name: Daisie Huang
-          message: "test convert"
-          add: "./test/*"
+          message: "convert test"
+          add: "*"
           ref: "test"
