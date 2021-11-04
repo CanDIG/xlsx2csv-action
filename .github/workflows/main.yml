@@ -8,7 +8,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Convert to CSV
-        uses: daisieh/xslx2csv-action # Uses an action in the root directory
+        uses: ./
         id: convert
         with:
           input_file: "${{GITHUB_WORKSPACE}}/test.xlsx"
