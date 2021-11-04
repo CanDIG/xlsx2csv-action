@@ -14,7 +14,9 @@ This action converts the individual sheets of a single xlsx file into individual
 
 ## Example usage
 
+```
 uses: daisieh/xlsx2csv-action
 with:
     input_file: 'test.xlsx'
     output_dir: 'untitled'
+```
