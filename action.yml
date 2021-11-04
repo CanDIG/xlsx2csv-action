@@ -3,16 +3,11 @@ name: 'XLSX to CSVs'
 description: "Convert an XLSX file's sheets to separate CSVs"
 inputs:
   input_file:  # id of input
-    description: 'xlsx file to convert'
+    description: 'xlsx file or directory to convert'
     required: true
     default: 'test.xlsx'
-  output_dir: # id of output
-    description: 'name of directory for output'
-    required: true
-    default: 'untitled'
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
     - ${{ inputs.input_file }}
-    - ${{ inputs.output_dir }}
