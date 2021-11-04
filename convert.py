@@ -1,6 +1,7 @@
 import argparse
 import os
 import re
+import shutil
 from xlsx2csv import Xlsx2csv
 
 
@@ -14,6 +15,8 @@ def main():
         file_match = re.match("(.+)\.xlsx$", args.input)
         if file_match is not None:
             output_dir = f"{os.environ.get('GITHUB_WORKSPACE')}/{file_match.group(1)}"
+            if os.path.exists(output_dir):
+                shutil.rmtree(output_dir)
             Xlsx2csv(args.input, outputencoding="utf-8").convert(output_dir, sheetid=0)
     else:
         dirlist = [args.input]
